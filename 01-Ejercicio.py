@@ -18,19 +18,18 @@ menu = """------------------------- M E N Ú -------------------------
 """
 
 tipos_masas = """*** Tipos de masas ***
-1) Napolitana.
 2) Americana.
-3) Romana.
 4) Italiana.
+1) Napolitana.
+3) Romana.
 """
 
-masas = ( "Napolitana", "Romana", "Italiana", "Americana" )
+masas = ( "Americana",  "Italiana", "Napolitana", "Romana" )
 
 pizzas = [
     {
         "codigo": 7811,
         "nombre": "Pepperoni",
-        "ingredientes": [ "Salsa De Tomate", "Queso Parmesano", "Pepperoni" ],
         "tipo_masa": "Napolitana",
         "precio": 13900,
         "stock": 20
@@ -38,7 +37,6 @@ pizzas = [
         {
         "codigo": 7812,
         "nombre": "Canadian Bacon",
-        "ingredientes": [ "Salsa De Tomate", "Queso Mozzarella", "Lomito Canadiense", "Tocino", "Queso Parmesano", "Queso Romano" ],
         "tipo_masa": "Romana",
         "precio": 15990,
         "stock": 15
@@ -46,7 +44,6 @@ pizzas = [
         {
         "codigo": 7813,
         "nombre": "Margarita",
-        "ingredientes": [ "Salsa De Tomate", "Queso Mozzarella", "Albahaca", "Pimienta Negra", "Aceite Oliva" ],
         "tipo_masa": "Italiana",
         "precio": 19990,
         "stock": 10
@@ -71,7 +68,7 @@ while True:
         masa = masas[ tipo_masa - 1 ]
 
         precio = int( input( "Ingrese el precio unitario: " ) )
-        stock = int( input( "Ingrese el stock disponible" ) )
+        stock = int( input( "Ingrese el stock disponible: " ) )
 
         pizza = {
             "codigo": codigo,
@@ -86,7 +83,15 @@ while True:
         print( "Pizza registrada exitosamente!" )
 
     elif opcion == "2":
-        pass
+        os.system( "cls" )
+        print( "----- Cátalogo de Pizzas -----" )
+
+        contador_catalogo = 0
+        
+        for p in pizzas:
+
+            contador_catalogo = contador_catalogo + 1
+            print( f"{ contador_catalogo }) Nombre: { p[ "nombre" ] } | T.Masa: { p[ "tipo_masa" ] } | Precio: ${ p[ "precio" ] } | Stock: { p[ "stock" ] }" )
 
     elif opcion == "3":
         pass
