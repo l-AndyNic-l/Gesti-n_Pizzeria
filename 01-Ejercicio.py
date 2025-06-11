@@ -12,10 +12,10 @@ menu = """------------------------- M E N Ú -------------------------
 """
 
 tipos_masas = """\n*** Tipos de masas ***
-2) Americana.
-4) Italiana.
-1) Napolitana.
-3) Romana."""
+1) Americana.
+2) Italiana.
+3) Napolitana.
+4) Romana."""
 
 masas = ( "Americana",  "Italiana", "Napolitana", "Romana" )
 
