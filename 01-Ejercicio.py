@@ -1,7 +1,6 @@
 # Sistema de Gestión de Pedidos para una Pizzería.
 
 # Menu con las siguientes opciones: 
-# Registrar nuevos productos: precio unitario, stock disponibles, INGREDIENTES
 # Tomar pedidos: Descontar del  stock, calcular compra | nombre cliente, pizza comprada, cantidad y el total pagado
 # Calcular totales: calcular compra y ventas del dia.
 # Registro de ventas realizadas: mostrar que pizzas se vendieron, cuuantas y el total.
@@ -50,6 +49,8 @@ pizzas = [
     },
 ]
 
+ventas_dia = []
+
 while True:
     os.system( "cls" )
     print( menu )
@@ -94,7 +95,41 @@ while True:
             print( f"{ contador_catalogo }) Nombre: { p[ "nombre" ] } | T.Masa: { p[ "tipo_masa" ] } | Precio: ${ p[ "precio" ] } | Stock: { p[ "stock" ] }" )
 
     elif opcion == "3":
-        pass
+        os.system( "cls" )
+        print( "----- Realizar Pedido -----" )
+
+        nombre_user = input( "Ingrese el nombre del cliente: " )
+        nombre_pizza = input( "Ingrese el nombre de la pizza: " )
+
+        for p in pizzas:
+
+            if p[ "nombre" ] == nombre_pizza:
+
+                cantidad_comprar = int( input( "Ingrese la cantidad de pizzas que comprara: " ) )
+
+                if p[ "stock" ] >= cantidad_comprar:
+
+                    p["stock"] = p["stock"] - cantidad_comprar
+
+                    total = p["precio"] * cantidad_comprar
+
+                    print( f"El total del pedido de pizzas de { p['nombre'] } es de ${ total }." )
+
+                    venta = {
+                        "nombre": nombre_user,
+                        "pizza": p[ "nombre" ],
+                        "cantidad": cantidad_comprar,
+                        "total": total
+                    }
+
+                    ventas_dia.append( venta )
+
+                    print( "Compra realizada con exito!" )
+
+                    break
+
+                else:
+                    print( "La cantidad que desea comprar supera al stock." )  
 
     elif opcion == "4":
         pass
