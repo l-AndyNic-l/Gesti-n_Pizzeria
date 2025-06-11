@@ -1,10 +1,5 @@
 # Sistema de Gestión de Pedidos para una Pizzería.
 
-# Menu con las siguientes opciones: 
-# Tomar pedidos: Descontar del  stock, calcular compra | nombre cliente, pizza comprada, cantidad y el total pagado
-# Calcular totales: calcular compra y ventas del dia.
-# Registro de ventas realizadas: mostrar que pizzas se vendieron, cuuantas y el total.
-
 import os, msvcrt
 
 menu = """------------------------- M E N Ú -------------------------
@@ -16,12 +11,11 @@ menu = """------------------------- M E N Ú -------------------------
 -----------------------------------------------------------
 """
 
-tipos_masas = """*** Tipos de masas ***
+tipos_masas = """\n*** Tipos de masas ***
 2) Americana.
 4) Italiana.
 1) Napolitana.
-3) Romana.
-"""
+3) Romana."""
 
 masas = ( "Americana",  "Italiana", "Napolitana", "Romana" )
 
@@ -55,21 +49,99 @@ while True:
     os.system( "cls" )
     print( menu )
 
-    opcion = input( "Ingrese una opción: " )
+    opcion = input( "* Ingrese una opción: " )
 
     if opcion == "1":
         os.system( "cls" )
         print( "----- Registrar Nueva Pizza -----" )
 
-        codigo = int( input( "Ingrese el codigo: " ) )
-        nombre = input( "Ingrese el nombre: " )
+        while True:
+            try:
+                codigo = int( input( "\n* Ingrese el codigo: " ) )
+                codigo_existe = False
+
+                if codigo > 0:
+
+                    for p in pizzas:
+
+                        if p[ "codigo" ] == codigo:
+
+                            codigo_existe = True
+                            print( "ERROR! Este código ya esta registrado." )
+                            break
+                
+                if codigo_existe == False:
+                    break
+            
+            except:
+                print( "ERROR! Ingrese un código válido." )
+
+        while True:
+            try:
+                nombre = input( "\n* Ingrese el nombre: " ).strip().title()
+                nombre_existe = False
+
+                if len( nombre ) >= 4:
+
+                    for p in pizzas:
+
+                        if p[ "nombre" ] == nombre:
+
+                            nombre_existe = True
+                            print( "ERROR! Este nombre ya esta registrado." )
+                            break
+                
+                else:
+                    print( "ERROR! El nombre de la pizza debe ser mayor a 3 caracteres." )
+                
+                if nombre_existe == False:
+                    break
+            
+            except:
+                print( "ERROR! Ingrese un nombre válido." )
 
         print( tipos_masas )
-        tipo_masa = int( input( "Ingrese el número de la masa: " ) )
-        masa = masas[ tipo_masa - 1 ]
 
-        precio = int( input( "Ingrese el precio unitario: " ) )
-        stock = int( input( "Ingrese el stock disponible: " ) )
+        while True:
+            try:
+                tipo_masa = int( input( "\n* Ingrese el número de la masa: " ) )
+
+                if tipo_masa >= 0 and tipo_masa <= 3:
+
+                    masa = masas[ tipo_masa - 1 ]
+                    break
+
+                else:
+                    print( "ERROR! Ingrese una opción dentro del rango." )
+
+            except:
+                print( "ERROR! Ingrese una opción válida." )
+
+        while True:
+            try:
+                precio = int( input( "\n* Ingrese el precio unitario: " ) )
+
+                if precio >= 3000:
+                    break
+
+                else:
+                    print( "ERROR! Debe ingresar un precio como minimo de $3000." )
+
+            except:
+                print( "ERROR! Ingrese un precio válido." )
+
+        while True:
+            try:
+                stock = int( input( "\n* Ingrese el stock disponible: " ) )
+
+                if stock >= 1:
+                    break
+
+                else:
+                    print( "ERROR! Debe ingresar un stock mayor a 0." )
+
+            except:
+                print( "ERROR! Ingrese un stock válido." )
 
         pizza = {
             "codigo": codigo,
@@ -81,11 +153,11 @@ while True:
 
         pizzas.append( pizza )
 
-        print( "Pizza registrada exitosamente!" )
+        print( "\n|-- Pizza registrada exitosamente! --|" )
 
     elif opcion == "2":
         os.system( "cls" )
-        print( "----- Cátalogo de Pizzas -----" )
+        print( "----- Cátalogo de Pizzas -----\n" )
 
         contador_catalogo = 0
         
@@ -98,45 +170,84 @@ while True:
         os.system( "cls" )
         print( "----- Realizar Pedido -----" )
 
-        nombre_user = input( "Ingrese el nombre del cliente: " )
-        nombre_pizza = input( "Ingrese el nombre de la pizza: " )
+        while True:
+            try:
+                nombre_user = input( "\n* Ingrese el nombre del cliente: " )
 
-        for p in pizzas:
-
-            if p[ "nombre" ] == nombre_pizza:
-
-                cantidad_comprar = int( input( "Ingrese la cantidad de pizzas que comprara: " ) )
-
-                if p[ "stock" ] >= cantidad_comprar:
-
-                    p["stock"] = p["stock"] - cantidad_comprar
-
-                    total = p["precio"] * cantidad_comprar
-
-                    print( f"El total del pedido de pizzas de { p['nombre'] } es de ${ total }." )
-
-                    venta = {
-                        "nombre": nombre_user,
-                        "pizza": p[ "nombre" ],
-                        "cantidad": cantidad_comprar,
-                        "total": total
-                    }
-
-                    ventas_dia.append( venta )
-
-                    print( "Compra realizada con exito!" )
-
+                if len( nombre_user ) >= 3:
                     break
 
                 else:
-                    print( "La cantidad que desea comprar supera al stock." )  
+                    print( "ERROR! El nombre debe ser mayor a 2 caracteres." )
+
+            except:
+                print( "ERROR! Ingrese un nombre válido." )
+
+        while True:
+            try:
+                nombre_pizza = input( "\n* Ingrese el nombre de la pizza: " ).strip().title()
+                pizza_existe = False
+
+
+                if len( nombre_pizza ) >= 4:
+
+                    for p in pizzas:
+
+                        if p[ "nombre" ] == nombre_pizza:
+
+                            pizza_existe = True
+                            
+                            while True:
+                                try:
+                                    cantidad_comprar = int( input( "\n* Ingrese la cantidad de pizzas que comprara: " ) )
+
+                                    if cantidad_comprar >= 1:
+                                        break
+                                
+                                except:
+                                    print( "ERROR! Ingrese una cantidad válida." )
+
+                            if p[ "stock" ] >= cantidad_comprar:
+
+                                p["stock"] = p["stock"] - cantidad_comprar
+
+                                total = p["precio"] * cantidad_comprar
+
+                                print( f"\nEl total del pedido de pizzas de { p['nombre'] } es de ${ total }." )
+
+                                venta = {
+                                    "nombre": nombre_user,
+                                    "pizza": p[ "nombre" ],
+                                    "cantidad": cantidad_comprar,
+                                    "total": total
+                                }
+
+                                ventas_dia.append( venta )
+
+                                print( "\n|-- Compra realizada con exito! --|" )
+
+                                break
+
+                            else:
+                                print( "ERROR! La cantidad que desea comprar supera al stock." )  
+
+                        if pizza_existe == False:
+                            print( "ERROR! La pizza no existe." )
+                            break
+
+                        else:
+                            print( "ERROR! El nombre de la pizza debe ser mayor a 3 caracteres." )
+
+            except:
+                print( "ERROR! Ingrese un nombre de pizza válido." )
+
 
     elif opcion == "4":
         os.system( "cls" )
-        print( "----- Ver los Pedidos Realizados -----" )
+        print( "----- Ver los Pedidos Realizados -----\n" )
 
         if len( ventas_dia ) == 0:
-            print( "No se han realizado ventas." )
+            print( "|-- No se han realizado ventas --|" )
 
         else:
 
@@ -147,16 +258,16 @@ while True:
 
                 acumulador = acumulador + v[ "total" ]
                 contador_ventas = contador_ventas + 1
-                print( f"{ contador_catalogo }) Usuario: { v[ "nombre" ] } | Pedido: { v[ "cantidad" ] } pizzas de { v[ "pizza" ] } | Total: ${ v[ "total" ] }")
+                print( f"{ contador_ventas }) Usuario: { v[ "nombre" ] } | Pedido: { v[ "cantidad" ] } pizzas de { v[ "pizza" ] } | Total: ${ v[ "total" ] }")
 
             print( f"Ventas totales: ${ acumulador }." )
 
     elif opcion == "5":
-        print( "Gracias, hasta pronto!" )
+        print( "\n|-- Gracias, hasta pronto! --|" )
         break
 
     else:
-        print( "ERROR! Ingrese una opción válida." )
+        print( "ERROR! Ingrese una opción válida.\n" )
 
-    print( "Precione una tecla para continuar." )
+    print( "\n\n***** Presione una tecla para continuar *****" )
     msvcrt.getch()
