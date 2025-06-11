@@ -235,8 +235,8 @@ while True:
                             print( "ERROR! La pizza no existe." )
                             break
 
-                        else:
-                            print( "ERROR! El nombre de la pizza debe ser mayor a 3 caracteres." )
+                else:
+                    print( "ERROR! El nombre de la pizza debe ser mayor a 3 caracteres." )
 
             except:
                 print( "ERROR! Ingrese un nombre de pizza válido." )
