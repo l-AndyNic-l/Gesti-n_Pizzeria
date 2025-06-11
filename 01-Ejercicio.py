@@ -226,21 +226,20 @@ while True:
 
                                 print( "\n|-- Compra realizada con exito! --|" )
 
-                                break
-
                             else:
                                 print( "ERROR! La cantidad que desea comprar supera al stock." )  
-
-                        if pizza_existe == False:
-                            print( "ERROR! La pizza no existe." )
-                            break
 
                 else:
                     print( "ERROR! El nombre de la pizza debe ser mayor a 3 caracteres." )
 
+                if pizza_existe == True:
+                    break
+
+                else:
+                    print( "ERROR! La pizza no existe." )
+
             except:
                 print( "ERROR! Ingrese un nombre de pizza válido." )
-
 
     elif opcion == "4":
         os.system( "cls" )
@@ -260,7 +259,7 @@ while True:
                 contador_ventas = contador_ventas + 1
                 print( f"{ contador_ventas }) Usuario: { v[ "nombre" ] } | Pedido: { v[ "cantidad" ] } pizzas de { v[ "pizza" ] } | Total: ${ v[ "total" ] }")
 
-            print( f"Ventas totales: ${ acumulador }." )
+            print( f"\nVentas totales: ${ acumulador }." )
 
     elif opcion == "5":
         print( "\n|-- Gracias, hasta pronto! --|" )
