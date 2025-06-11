@@ -132,7 +132,24 @@ while True:
                     print( "La cantidad que desea comprar supera al stock." )  
 
     elif opcion == "4":
-        pass
+        os.system( "cls" )
+        print( "----- Ver los Pedidos Realizados -----" )
+
+        if len( ventas_dia ) == 0:
+            print( "No se han realizado ventas." )
+
+        else:
+
+            contador_ventas = 0
+            acumulador = 0
+        
+            for v in ventas_dia:
+
+                acumulador = acumulador + v[ "total" ]
+                contador_ventas = contador_ventas + 1
+                print( f"{ contador_catalogo }) Usuario: { v[ "nombre" ] } | Pedido: { v[ "cantidad" ] } pizzas de { v[ "pizza" ] } | Total: ${ v[ "total" ] }")
+
+            print( f"Ventas totales: ${ acumulador }." )
 
     elif opcion == "5":
         print( "Gracias, hasta pronto!" )
